@@ -19,10 +19,6 @@
     (time) = val / 2670000000.;                              \
   } while(0)
 
-
-
-
-
 Matrix::Matrix(int argc, char** argv)
 {
 
@@ -38,32 +34,24 @@ Matrix::Matrix(int argc, char** argv)
   
   double time1, time2;
   
-  /*
-  t = clock();
-  Atranspose();
-  t = clock() - t;
+  std::ofstream Output;
+  Output.open("Output_file.txt");  
 
-  std::cout << "Transposing took me " << ((float)t) / CLOCKS_PER_SEC << " seconds" << std::endl; 
+  for(int i = 1; i <= 17; i++)
+  {
+    WALLCLOCK(time1);
+    std_multiply(i);
+    WALLCLOCK(time2);
+    
+    Output << "Number of threads = " << i << "\n";
+    Output << "Time elapsed = " << time2 - time1 << "\n";
+    Output << "\n";
   
-  t = clock();*/
-  WALLCLOCK(time1);
-  std_multiply();
-  WALLCLOCK(time2);/*
-  t = clock() - t;
-
-  std::cout << "Multiplying took me " << ((float)t) / CLOCKS_PER_SEC << " seconds" << std::endl; 
-  */
-
- // t = clock();
-//  block_multiply();
-  //t = clock() - t;
+  }
   
- // std::cout << "Using blocking, it took me " << ((float)t) / CLOCKS_PER_SEC << " seconds" << std::endl;
-
-  std::cout << "Time elapsed = " << time2 - time1 << std::endl;
+  Output.close();
 
   printResult(argv);
-
 }
 
 void Matrix::FillMatrices(int argc, char** argv)
