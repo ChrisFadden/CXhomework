@@ -46,9 +46,9 @@ Matrix::Matrix(int argc, char** argv)
   std::cout << "Transposing took me " << ((float)t) / CLOCKS_PER_SEC << " seconds" << std::endl; 
   
   t = clock();*/
-  WALLCLOCK(time1)
+  WALLCLOCK(time1);
   std_multiply();
-  WALLCLOCK(time2)/*
+  WALLCLOCK(time2);/*
   t = clock() - t;
 
   std::cout << "Multiplying took me " << ((float)t) / CLOCKS_PER_SEC << " seconds" << std::endl; 
