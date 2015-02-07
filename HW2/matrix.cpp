@@ -7,6 +7,21 @@
 #include <time.h>
 #include <iostream>
 #include <omp.h>
+#include <xmmintrin.h>
+#include <assert.h>
+
+// timer using processor counter
+#define WALLCLOCK(time) do {                                 \
+    unsigned long long val;                                  \
+    volatile unsigned int a, d;                              \
+    __asm__ __volatile__("rdtsc" : "=a" (a), "=d" (d) : );   \
+    val = ((unsigned long long) a)|(((unsigned long long)d)<<32); \
+    (time) = val / 2670000000.;                              \
+  } while(0)
+
+
+
+
 
 Matrix::Matrix(int argc, char** argv)
 {
@@ -21,7 +36,7 @@ Matrix::Matrix(int argc, char** argv)
 
   FillMatrices(argc, argv);
   
-  clock_t t;
+  double time1, time2;
   
   /*
   t = clock();
@@ -30,8 +45,10 @@ Matrix::Matrix(int argc, char** argv)
 
   std::cout << "Transposing took me " << ((float)t) / CLOCKS_PER_SEC << " seconds" << std::endl; 
   
-  t = clock();
-  */std_multiply();/*
+  t = clock();*/
+  WALLCLOCK(time1)
+  std_multiply();
+  WALLCLOCK(time2)/*
   t = clock() - t;
 
   std::cout << "Multiplying took me " << ((float)t) / CLOCKS_PER_SEC << " seconds" << std::endl; 
@@ -42,6 +59,8 @@ Matrix::Matrix(int argc, char** argv)
   //t = clock() - t;
   
  // std::cout << "Using blocking, it took me " << ((float)t) / CLOCKS_PER_SEC << " seconds" << std::endl;
+
+  std::cout << "Time elapsed = " << time2 - time1 << std::endl;
 
   printResult(argv);
 
