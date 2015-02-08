@@ -78,8 +78,11 @@ void Matrix::Atranspose()
       A[r + c*q] = tmp[c + r*m]; //transpose A
 }
 
-void Matrix::std_multiply()
+void Matrix::std_multiply(int NumThread)
 {
+
+  omp_set_num_threads(NumThread);
+
   #pragma omp parallel for 
   for(int i = 0; i < m; i++)
     for(int j = 0; j < n; j++)

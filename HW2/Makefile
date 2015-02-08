@@ -1,8 +1,8 @@
 OBJS = main.o matrix.o
 HEADERS = matrix.h 
 CC = g++
-CFLAGS = -Wall -c -g -std=c++11 -fopenmp 
-LFLAGS = -Wall -g -std=c++11 -lpthread -fopenmp
+CFLAGS = -Wall -c -g -std=c++0x -fopenmp 
+LFLAGS = -Wall -g -std=c++0x -lpthread -fopenmp
 EXE    =  matrix
 
 matrix : $(OBJS)

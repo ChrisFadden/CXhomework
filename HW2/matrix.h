@@ -25,7 +25,7 @@ class Matrix
     void FillMatrices(int, char**);
     void FillFromFile(int, char**);
     void FillRandom();
-    void std_multiply();
+    void std_multiply(int);
     void Atranspose();
     void block_multiply();
     void printResult(char**);
