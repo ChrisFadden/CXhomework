@@ -5,7 +5,7 @@
 #include <iostream>
 
 extern void dgemm_(char*, char*, int*, int*,int*, double*, double*, int*, double*, int*, double*, double*, int*);
-extern void openblas_set_numthreads(int);
+//extern void openblas_set_numthreads(int);
 
 
 int main(int argc, char* argv[])
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 
   for(int i = 1; i <= 36; i++)
   {
-    openblas_set_num_threads(i);
+   // openblas_set_num_threads(i);
     gettimeofday(&start, NULL);
     dgemm_(&ta, &tb, &m, &n, &k, &alpha, A, &m, B, &k, &beta, C, &m);
     gettimeofday(&finish, NULL);
