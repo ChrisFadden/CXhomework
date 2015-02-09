@@ -4,8 +4,11 @@ CFLAGS = -Wall -c -g -std=c++0x
 LFLAGS = -Wall -g -std=c++0x -lpthread -lopenblas 
 EXE    =  timeDGEMM
 
+LIBS_PATH = -L./openblas/lib
+INC_PATH = -I./openblas/include
+
 timeDGEMM : $(OBJS)
-	$(CC) $(LFLAGS) $(OBJS) -o $(EXE)
+	$(CC) $(INC_PATH) $(LIBS_PATH) $(LFLAGS) $(OBJS) -o $(EXE)
 
 timeDGEMM.o : timeDGEMM.cpp 
 	$(CC) $(CFLAGS) timeDGEMM.cpp	
