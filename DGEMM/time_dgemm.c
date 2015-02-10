@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
     duration = ((double)(finish.tv_sec-start.tv_sec)*1000000 + (double)(finish.tv_usec-start.tv_usec)) / 1000000;
     
     fprintf(outFile, "Number of threads = %d \n",i);
-    fprintf(outFile, "Time Elapsed = %d \n\n",duration);
+    fprintf(outFile, "Time Elapsed = %f \n\n",duration);
 
   }//end dgemm loops
   
