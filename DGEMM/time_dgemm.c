@@ -4,6 +4,7 @@
 #include "time.h"
 
 extern void dgemm_(char*, char*, int*, int*,int*, double*, double*, int*, double*, int*, double*, double*, int*);
+extern void openblas_set_num_threads(int);
 
 int main(int argc, char* argv[])
 {
@@ -42,6 +43,9 @@ int main(int argc, char* argv[])
 
   for (i=0; i<sizeofc; i++)
     C[i] = i%3+1;//(rand()%100)/10.0;
+
+  openblas_set_num_threads(4);
+
   //#if 0
   printf("m=%d,n=%d,k=%d,alpha=%lf,beta=%lf,sizeofc=%d\n",m,n,k,alpha,beta,sizeofc);
   gettimeofday(&start, NULL);
