@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "sys/time.h"
+#include "time.h"
 #include "mkl.h"
 
 
@@ -17,7 +19,7 @@ int main(int argc, char **argv)
 	// Matrix size. Any bigger than 8 and it looks really messy when you print
 	// the result matrix out. But you can change this to whatever size you
 	// want.
-	int n = 8;
+	int n = 3000;
 
 	// The cblas_dgemm function down below performs this operation:
 	// C = alpha*A*B + beta*C
@@ -94,10 +96,27 @@ int main(int argc, char **argv)
 	//		successive rows (for row major storage) in memory. In the case of
 	//		this exercise the leading dimension is the same as the number of
 	//		columns.
-	cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, 
-                n, n, n, alpha, A, n, B, n, beta, C, n);
+	
+        struct timeval start, finish;
+        double duration;
+        FILE *outFile;
+        outFile = fopen("mklOut.txt","w");
+        int t;
 
+        for(t = 1; t <= 36; t++)
+        {  
+          mkl_set_num_threads(t);
+          gettimeofday(&start, NULL);
+          cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, n, n, n, alpha, A, n, B, n, beta, C, n);
+          gettimeofday(&finish, NULL);
+          duration = ((double)(finish.tv_sec-start.tv_sec)*1000000 + (double)(finish.tv_usec-start.tv_usec)) / 1000000;
+          fprintf(outFile, "Number of threads = %d \n",t);
+          fprintf(outFile, "Time Elapsed = %f \n\n",duration); 
+        }//end cblas loops
 
+        fclose(outFile);
+
+        /*
 	// print the results
 	for (int i = 0; i < n; i++)
 	{
@@ -106,9 +125,9 @@ int main(int argc, char **argv)
 			printf(" %lf", C[i*n + j]);
 		printf("\n");
 	}
-
+        
 	printf("\n");
-
+        */
 	// free memory used
 	mkl_free(A);
 	mkl_free(B);
